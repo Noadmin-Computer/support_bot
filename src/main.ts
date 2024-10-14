@@ -4,7 +4,6 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { env } from 'process';
 import { AppModule } from './app.module';
 
-
 const PORT = env.PORT || 9000;
 
 async function bootstrap() {
@@ -12,9 +11,12 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('API Documentation')
-    .setDescription('The API documentation fo!r our!!! project')
+    .setDescription('The API documentation for our project')
     .setVersion('1.0')
-    .addTag('Supporter')
+    .addBearerAuth(
+      { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
+      'access-token',
+    )
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
